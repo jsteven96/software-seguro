@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -18,15 +19,16 @@ public class WebhooksServiceImpl {
     private CommitRepository repository;
 
     public WebhookResponse saveCommit(WebhookResponse request) {
-        Timestamp timestamp = new Timestamp(Long.parseLong(request.getHeadCommit().getTimestamp()));
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(request.getHeadCommit().getTimestamp());
+
 
         CommitEntity entity = CommitEntity.builder()
-                .id("1")
+                .id(request.getHeadCommit().getId())
                 .commitID(request.getHeadCommit().getId())
                 .authorEmail(request.getPusher().getEmail())
                 .commitMessage(request.getHeadCommit().getMessage())
                 .authorName(request.getPusher().getName())
-                .createdAt(new Date(timestamp.getTime()))
+                .createdAt(Date.from(zonedDateTime.toInstant()))
                 .build();
         log.info("Objeto a guardar" + entity.toString());
         repository.save(entity);
