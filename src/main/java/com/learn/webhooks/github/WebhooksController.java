@@ -18,7 +18,7 @@ public class WebhooksController {
     public Map<String, Object> getWebHook(
             @RequestBody Map<String, Object> body
             ) {
-        log.info("Receiving a request");
+        log.info("Receiving a request from a POST HTTP verb");
         log.info(body.toString());
         return body;
     }
