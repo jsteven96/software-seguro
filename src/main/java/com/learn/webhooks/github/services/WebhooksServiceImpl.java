@@ -30,7 +30,7 @@ public class WebhooksServiceImpl {
                 .authorName(request.getPusher().getName())
                 .createdAt(Date.from(zonedDateTime.toInstant()))
                 .repoName(request.getRepository().getName())
-                .payload(request.toString())
+                .payload("")
                 .build();
         log.info("Objeto a guardar" + entity.toString());
         repository.save(entity);
